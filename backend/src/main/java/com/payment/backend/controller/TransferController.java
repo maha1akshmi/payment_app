@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import com.payment.backend.entity.User;
+import com.payment.backend.repository.UserRepository;
+import com.payment.backend.util.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +23,7 @@ public class TransferController {
     @Autowired
     private TransferService transferService;
     @Autowired
-    private JwtUtil JwtUtil;
+    private JwtUtil jwtUtil;
     @Autowired
     private UserRepository userRepo;
     @Autowired

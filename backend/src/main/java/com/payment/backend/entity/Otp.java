@@ -3,6 +3,7 @@ package com.payment.backend.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Indexed;
 
@@ -16,7 +17,7 @@ import lombok.Getter;
 public class Otp {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
