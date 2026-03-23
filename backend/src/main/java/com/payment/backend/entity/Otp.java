@@ -4,11 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.stereotype.Indexed;
-
 import lombok.Data;
-import lombok.Getter;
 
 
 @Entity
