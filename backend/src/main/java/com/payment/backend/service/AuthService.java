@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -19,6 +20,12 @@ public class AuthService {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public Map register(String name, String email, String password, String tpin) {
+        if (userRepo.existsByEmail(email)) {
+            Map res = new HashMap();
+            res.put("error", "Email already registered");
+            return res;
+        }
+
         User user = new User();
         user.setName(name);
         user.setEmail(email);
@@ -39,15 +46,28 @@ public class AuthService {
     }
 
     public Map login(String email, String password) {
-        User user = userRepo.findByEmail(email).orElseThrow();
-        if (!encoder.matches(password, user.getPasswordHash()))
-            throw new RuntimeException("Invalid credentials");
-        String token = jwtUtil.generateToken(email);
-        Account account = accountRepo.findByUser(user).orElseThrow();
         Map res = new HashMap();
+
+        Optional<User> optUser = userRepo.findByEmail(email);
+        if (optUser.isEmpty()) {
+            res.put("error", "User not found");
+            return res;
+        }
+
+        User user = optUser.get();
+        if (!encoder.matches(password, user.getPasswordHash())) {
+            res.put("error", "Invalid credentials");
+            return res;
+        }
+
+        String token = jwtUtil.generateToken(email);
+        Account account = accountRepo.findByUser(user).orElse(null);
+
         res.put("token", token);
         res.put("name", user.getName());
-        res.put("accountNumber", account.getAccountNumber());
+        if (account != null) {
+            res.put("accountNumber", account.getAccountNumber());
+        }
         return res;
     }
 
