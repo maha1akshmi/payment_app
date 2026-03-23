@@ -1,10 +1,16 @@
 package com.payment.backend.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Data
 @Entity
@@ -12,7 +18,7 @@ import java.time.LocalDateTime;
 public class Transaction{
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     private String referenceId;
@@ -30,6 +36,11 @@ public class Transaction{
     private String status="SUCCESS";
 
     private LocalDateTime timestamp=LocalDateTime.now();
+
+    public void save(Transaction txn) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    }
 
 
 }
