@@ -28,6 +28,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/account/**").authenticated()
+                        .requestMatchers("/api/otp/**").authenticated()
+                        .requestMatchers("/api/transfer/**").authenticated()
+                        .requestMatchers("/api/transaction/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
